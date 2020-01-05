@@ -3,6 +3,11 @@
   Use your API OpenAPI 3 definition to generate code, documentation, and literally anything you need.
 </p>
 
+## Fork notice
+
+- Uses a custom `json-schema-ref-parser` build that adds `$originalRef` as a reference to the 
+original `$ref` to the output schema, which is useful for static analysis when trying to generate types
+
 ## Install
 
 To use it from the CLI:
