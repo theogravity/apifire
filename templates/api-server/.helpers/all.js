@@ -245,12 +245,24 @@ module.exports = (Handlebars, _) =>{
     return str
   });
 
+  /**
+   * Determine if an object was defined without a reference
+   */
   Handlebars.registerHelper('isLoneObj', (context, options) => {
      if(context.type === 'object' && !Array.isArray(context['x-original-ref'])) {
        return options.fn(context);
      }
 
      return options.inverse(context);
+  })
+
+  Handlebars.registerHelper('handleParam', (tsType, str, prefix) => {
+    switch (tsType) {
+      case 'number':
+        return `parseInt(${prefix}${str}, 10)`
+      default:
+        return `${prefix}${str}`
+    }
   })
 
   /**

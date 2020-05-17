@@ -7,6 +7,9 @@
     "og": "./cli.js",
     "openapi3-generator": "./cli.js"
   },
+  "scripts": {
+    "generate:petstore": "rm -rf sample && og -o sample tests/openapi3/petstore.yaml api-server"
+  },
   "bugs": {
     "url": "https://github.com/fmvilas/openapi3-generator/issues"
   },
