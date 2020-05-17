@@ -1,7 +1,10 @@
 import Ajv from 'ajv'
 import { getErrRegistry } from '../../core/errors'
 
-const ajv = new Ajv({allErrors: true})
+const ajv = new Ajv({
+  allErrors: true,
+  unknownFormats: 'ignore'
+})
 
 {{#each operation}}
   {{#each this.path}}
