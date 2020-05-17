@@ -136,6 +136,8 @@ components:
       description: Thought id
       schema:
         type: string
+        minLength: 3
+        maxLength: 20
   schemas:
     CommonResponseProps:
       xml:

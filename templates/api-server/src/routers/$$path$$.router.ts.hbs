@@ -6,11 +6,21 @@ import {
 {{#each operation}}
   {{#each this.path}}
     {{#validMethod @key}}
-  {{funcOperation ../operationId}}{{#unless @last}},{{/unless}}
+  {{funcOperation ../operationId}},
     {{/validMethod}}
   {{/each}}
 {{/each}}
 } from '../controllers/{{operation_name}}'
+
+import {
+{{#each operation}}
+  {{#each this.path}}
+    {{#validMethod @key}}
+  validate{{formatOperation ../operationId}}Params,
+{{/validMethod}}
+  {{/each}}
+{{/each}}
+} from './validators/{{operation_name}}.validator'
 
 const router = Router()
 
@@ -32,27 +42,23 @@ router.{{@key}}('{{../../subresource}}', async (req: IRequest, res: Response, ne
 {{/if}}
 
 {{#each ../parameters}}
-  {{#equal this.in "cookie"}}
-    {{{formatVar ../name}}}: req.cookies['{{../name}}']{{#unless @last}},{{/unless}}
-  {{/equal}}
-  {{#equal this.in "header"}}
-    {{{formatVar ../name}}}: req.header('{{../name}}'){{#unless @last}},{{/unless}}
-  {{/equal}}
   {{#equal this.in "query"}}
-    {{{formatVar ../name}}}: req.query.{{../name}}{{#unless @last}},{{/unless}}
+    {{{formatVar ../name}}}: req.query.{{../name}} as unknown as {{tsType ../schema.type ../schema}},
   {{/equal}}
   {{#equal this.in "path"}}
-    {{{formatVar ../name}}}: req.params.{{../name}}{{#unless @last}},{{/unless}}
+    {{{formatVar ../name}}}: req.params.{{../name}} as unknown as {{tsType ../schema.type ../schema}},
   {{/equal}}
   {{#match @../key "(post|put)"}}
     {{#equal ../in "body"}}
-    {{{formatVar ../name}}}: req.body.{{../name}}{{#unless @last}},{{/unless}}
+    {{{formatVar ../name}}}: req.body.{{../name}} as unknown as {{tsType ../schema.type ../schema}},
     {{/equal}}
   {{/match}}
 {{/each}}
   }
 
   try {
+    validate{{formatOperation ../operationId}}Params(params)
+
     const result = await {{funcOperation ../operationId}}(req.context, params)
   {{#ifNoSuccessResponses ../responses}}
     delete result.status

@@ -1,0 +1,54 @@
+import Ajv from 'ajv'
+import { getErrRegistry } from '../../core/errors'
+
+const ajv = new Ajv({allErrors: true})
+
+{{#each operation}}
+  {{#each this.path}}
+    {{#validMethod @key}}
+const {{funcOperation ../operationId}}Validator = ajv.compile({
+  type: 'object',
+  required: [
+{{#each ../parameters}}
+  {{#equal this.in "query"}}
+    {{#if ../required}}'{{{formatVar ../name}}}'{{/if}},
+  {{/equal}}
+  {{#equal this.in "path"}}
+    {{#if ../required}}'{{{formatVar ../name}}}'{{/if}},
+  {{/equal}}
+  {{#match @../key "(post|put)"}}
+    {{#equal ../in "body"}}
+      {{#if ../required}}'{{{formatVar ../name}}}'{{/if}},
+    {{/equal}}
+  {{/match}}
+{{/each}}
+  ],
+  properties: {
+{{#each ../parameters}}
+  {{#equal this.in "query"}}
+    {{{formatVar ../name}}}: {{{stringify ../schema}}},
+  {{/equal}}
+  {{#equal this.in "path"}}
+    {{{formatVar ../name}}}: {{{stringify ../schema}}},
+  {{/equal}}
+  {{#match @../key "(post|put)"}}
+    {{#equal ../in "body"}}
+      {{{formatVar ../name}}}: {{{stringify ../schema}}},
+    {{/equal}}
+  {{/match}}
+{{/each}}
+  }
+})
+
+export function validate{{formatOperation ../operationId}}Params (params) {
+  const valid = {{funcOperation ../operationId}}Validator(params)
+
+  if (!valid) {
+    throw getErrRegistry().newErr('VALIDATION_FAILURE', 'INVALID_REQ_PARAMS').withSafeMetadata({
+      failedValidations: {{funcOperation ../operationId}}Validator.errors
+    })
+  }
+}
+    {{/validMethod}}
+  {{/each}}
+{{/each}}
