@@ -11,14 +11,14 @@ const {{funcOperation ../operationId}}Validator = ajv.compile({
   required: [
 {{#each ../parameters}}
   {{#equal this.in "query"}}
-    {{#if ../required}}'{{{formatVar ../name}}}'{{/if}},
+    {{#if ../required}}'{{{formatVar ../name}}}',{{/if}}
   {{/equal}}
   {{#equal this.in "path"}}
-    {{#if ../required}}'{{{formatVar ../name}}}'{{/if}},
+    {{#if ../required}}'{{{formatVar ../name}}}',{{/if}}
   {{/equal}}
   {{#match @../key "(post|put)"}}
     {{#equal ../in "body"}}
-      {{#if ../required}}'{{{formatVar ../name}}}'{{/if}},
+      {{#if ../required}}'{{{formatVar ../name}}}',{{/if}}
     {{/equal}}
   {{/match}}
 {{/each}}
