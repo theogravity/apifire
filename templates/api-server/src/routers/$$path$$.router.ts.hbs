@@ -43,14 +43,14 @@ router.{{@key}}('{{../../subresource}}', async (req: IRequest, res: Response, ne
 
 {{#each ../parameters}}
   {{#equal this.in "query"}}
-    {{{formatVar ../name}}}: {{handleParam (tsType ../schema.type ../schema) ../name "req.query."}} as unknown as {{tsType ../schema.type ../schema}},
+    {{{formatVar ../name}}}: {{{handleParam (tsType ../schema.type ../schema) ../name "req.query."}}} as unknown as {{{tsType ../schema.type ../schema}}},
   {{/equal}}
   {{#equal this.in "path"}}
-    {{{formatVar ../name}}}: {{handleParam (tsType ../schema.type ../schema) ../name "req.params."}}  as unknown as {{tsType ../schema.type ../schema}},
+    {{{formatVar ../name}}}: {{{handleParam (tsType ../schema.type ../schema) ../name "req.params."}}}  as unknown as {{{tsType ../schema.type ../schema}}},
   {{/equal}}
   {{#match @../key "(post|put)"}}
     {{#equal ../in "body"}}
-    {{{formatVar ../name}}}: {{handleParam (tsType ../schema.type ../schema) ../name "req.body."}} as unknown as {{tsType ../schema.type ../schema}},
+    {{{formatVar ../name}}}: {{{handleParam (tsType ../schema.type ../schema) ../name "req.body."}}} as unknown as {{{tsType ../schema.type ../schema}}},
     {{/equal}}
   {{/match}}
 {{/each}}
