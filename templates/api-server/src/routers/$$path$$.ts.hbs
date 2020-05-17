@@ -1,0 +1,75 @@
+import { Router, Request, Response, NextFunction } from 'express'
+import * as ApiInterfaces from '../interfaces/api'
+
+import {
+{{#each operation}}
+  {{#each this.path}}
+    {{#validMethod @key}}
+  {{funcOperation ../operationId}}{{#unless @last}},{{/unless}}
+    {{/validMethod}}
+  {{/each}}
+{{/each}}
+} from '../controllers/{{operation_name}}'
+
+const router = new Router()
+
+{{#each operation}}
+    {{#each this.path}}
+        {{#validMethod @key}}
+/**
+{{#if ../description}}
+ * {{{docComment ../description}}}
+{{/if}}
+{{#each ../parameters}}
+ * @param {{schema.type}} {{#unless required}}[{{/unless}}{{name}}{{#unless required}}]{{/unless}} {{{description}}}
+{{/each}}
+ */
+router.{{@key}}('{{../../subresource}}', async (req: Request, res: Response, next: NextFunction) => {
+  const params : ApiInterfaces.{{paramOperation ../operationId}} = {
+{{#if ../requestBody}}
+  {{> reqParams ../requestBody }}
+{{/if}}
+
+{{#each ../parameters}}
+  {{#equal this.in "cookie"}}
+    {{{formatVar ../name}}}: req.cookies['{{../name}}']{{#unless @last}},{{/unless}}
+  {{/equal}}
+  {{#equal this.in "header"}}
+    {{{formatVar ../name}}}: req.header('{{../name}}'){{#unless @last}},{{/unless}}
+  {{/equal}}
+  {{#equal this.in "query"}}
+    {{{formatVar ../name}}}: req.query.{{../name}}{{#unless @last}},{{/unless}}
+  {{/equal}}
+  {{#equal this.in "path"}}
+    {{{formatVar ../name}}}: req.params.{{../name}}{{#unless @last}},{{/unless}}
+  {{/equal}}
+  {{#match @../key "(post|put)"}}
+    {{#equal ../in "body"}}
+    {{{formatVar ../name}}}: req.body.{{../name}}{{#unless @last}},{{/unless}}
+    {{/equal}}
+  {{/match}}
+{{/each}}
+  }
+
+  try {
+    const result = await {{funcOperation ../operationId}}(req.context, params)
+  {{#ifNoSuccessResponses ../responses}}
+    delete result.status
+
+    res.status(200).send(result)
+  {{else}}
+    res.status(result.status || 200)
+
+    delete result.status
+
+    res.send(result)
+  {{/ifNoSuccessResponses}}
+  } catch (err) {
+    next(err)
+  }
+})
+        {{/validMethod}}
+    {{/each}}
+{{/each}}
+
+export default router

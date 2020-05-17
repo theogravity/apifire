@@ -1,0 +1,193 @@
+openapi: 3.0.1
+info:
+  title: BoxedThoughts API
+  version: 1.0.0
+servers:
+  - url: https://api.boxedthoughts.com/v1
+tags:
+  - name: Thoughts
+    description: Overall thoughtstream
+  - name: User
+    description: User operations
+  - name: Meta
+    description: Global metadata
+paths:
+  /meta:
+    get:
+      tags: [Meta]
+      operationId: getBtMetadata
+      responses:
+        200:
+          $ref: '#/components/responses/BtMetadataResponse'
+  /thoughts/{thoughtId}:
+    get:
+      tags: [Thoughts]
+      operationId: getThoughtById
+      description: Get a thought by id
+      parameters:
+        - $ref: '#/components/parameters/thoughtId'
+      responses:
+        200:
+          $ref: '#/components/responses/ThoughtResponse'
+  /thoughts:
+    get:
+      tags: [Thoughts]
+      operationId: getThoughtStream
+      description: Get the latest set of thoughts
+      responses:
+        200:
+          $ref: '#/components/responses/ThoughtStreamResponse'
+    post:
+      tags: [Thoughts]
+      operationId: newThought
+      description: Post a new thought
+      responses:
+        200:
+          $ref: '#/components/responses/ThoughtResponse'
+  /users/{userId}/thoughts:
+    get:
+      tags: [User]
+      operationId: getUserThoughts
+      description: Get a user's thoughts
+      parameters:
+        - $ref: '#/components/parameters/testHeader'
+        - $ref: '#/components/parameters/userId'
+      responses:
+        200:
+          $ref: '#/components/responses/ThoughtStreamResponse'
+  /users/{userId}:
+    get:
+      description: Get a user by id
+      tags: [User]
+      operationId: getUserById
+      parameters:
+        - $ref: '#/components/parameters/userId'
+      responses:
+        200:
+          $ref: '#/components/responses/GetUserResponse'
+components:
+  responses:
+    BtMetadataResponse:
+      description: Metadata response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/CommonResponseProps'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/BtMetadata'
+    ThoughtResponse:
+      description: A thought
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/CommonResponseProps'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Thought'
+    ThoughtStreamResponse:
+      description: Array of thoughts
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/CommonResponseProps'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      thoughts:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Thought'
+    GetUserResponse:
+      description: get user success response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/CommonResponseProps'
+              - type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/BtUser'
+  parameters:
+    testHeader:
+      in: header
+      name: X-Request-ID
+      schema:
+        type: string
+    userId:
+      name: userId
+      in: path
+      required: true
+      description: User Id
+      schema:
+        type: string
+    thoughtId:
+      name: thoughtId
+      in: path
+      required: true
+      description: Thought id
+      schema:
+        type: string
+  schemas:
+    CommonResponseProps:
+      xml:
+        name: CommonResponseProps
+      type: object
+      properties:
+        reqId:
+          type: string
+          description: Request id
+    BtMetadata:
+      xml:
+        name: BtMetadata
+      type: object
+      properties:
+        postTimeWait:
+          type: integer
+          description: Time in seconds that a user has to wait before posting a new thought
+    Thought:
+      xml:
+        name: Thought
+      type: object
+      properties:
+        id:
+          type: string
+          description: Thought id
+        userId:
+          type: string
+          description: User id that created the thought
+        formatted:
+          type: string
+          description: Thought with format codes
+        text:
+          type: string
+          description: Text-only version of the thought
+        created:
+          type: string
+          description: Unix timestamp of the created thought
+    BtUser:
+      xml:
+        name: BtUser
+      type: object
+      properties:
+        id:
+          type: string
+          description: User id
+        username:
+          type: string
+          description: User username
+        about:
+          type: string
+          description: User's about blurb
+        lastPublicPostTime:
+          type: integer
+          description: Unix timestamp of last public post
+          default: 0

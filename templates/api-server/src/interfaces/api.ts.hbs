@@ -1,0 +1,54 @@
+{{! Request section}}
+{{#each openapi.paths}}
+  {{#each this}}
+    {{#validMethod @key}}
+export interface {{paramOperation ../operationId}} {
+{{#each ../parameters}}
+{{#if description}}
+  /**
+  * {{{description}}}
+  */
+  {{name}}{{#unless required}}?{{/unless}}: {{{tsType schema.type schema}}}
+{{/if}}
+{{/each}}
+}
+
+    {{/validMethod}}
+  {{/each}}
+{{/each}}
+
+{{! Schemas section}}
+
+{{#each openapi.components.schemas}}
+export interface {{@key}} {
+{{> parseTypeSchema this}}
+}
+
+{{/each}}
+
+{{! Responses w/o ref section}}
+{{#each openapi.paths}}
+  {{#each this}}
+    {{#validMethod @key}}
+export interface {{resOperation ../operationId}} {
+  status?: number
+{{> parseTypeSchema ../responses.[200].content.[application/json].schema}}
+}
+    {{/validMethod}}
+  {{/each}}
+{{/each}}
+
+{{! Responses w ref section}}
+{{#each openapi.components.responses}}
+{{#if [x-original-ref]}}
+export interface {{parseRef [x-original-ref]}} {
+  status?: number
+{{#each content}}
+    {{#each schema.allOf}}
+{{> parseTypeSchema this}}
+    {{/each}}
+{{/each}}
+}
+
+{{/if}}
+{{/each}}

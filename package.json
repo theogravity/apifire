@@ -1,8 +1,8 @@
 {
-  "name": "openapi3-generator-alt",
+  "name": "swaggifier",
   "main": "./lib/generator.js",
   "version": "0.13.2",
-  "description": "Use your API OpenAPI 3 definition to generate code, documentation, and literally anything you need.",
+  "description": "Generates express routers/controllers in Typescript using an OpenAPI 3 spec.",
   "bin": {
     "og": "./cli.js",
     "openapi3-generator": "./cli.js"
@@ -56,8 +56,10 @@
     "markdown-it": "^10.0.0",
     "oas-validator": "^4.0.3",
     "openapi-sampler": "^1.0.0-beta.15",
+    "prettier-standard": "16.1.0",
     "project-name-generator": "^2.1.7",
     "slugg": "^1.2.1",
+    "typescript": "^3.9.2",
     "word-wrap": "1.2.3"
   }
 }
