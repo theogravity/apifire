@@ -37,9 +37,10 @@ export async function {{funcOperation ../operationId}} (
   // });
 
   return {
-    reqId: context.getReqId(),
-    data: '{{../operationId}} ok!'
-  };
+  {{#each ../responses.[200].content}}
+  {{> resParams schema}}
+  {{/each}}
+  }
 };
 
     {{/validMethod}}

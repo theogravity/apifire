@@ -8,6 +8,12 @@ It takes an OpenAPI 3 spec, and generates routes, controllers, and validators fo
 This library is a work-in-progress (alpha level, in my opinion), and works specifically with the
 author's use-cases.
 
+It's been tested with the following files:
+
+- `tests/openapi3/petstore.yaml`
+- `tests/openapi3/petstore-expnanded.yaml`
+- `tests/openapi3/bt-example.yaml`
+
 ## Fork notice
 
 This library is a fork of the [`openapi3-generator`](https://github.com/openapi-contrib/openapi3-generator) project.

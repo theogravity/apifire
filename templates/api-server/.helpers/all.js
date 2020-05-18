@@ -30,6 +30,20 @@ module.exports = (Handlebars, _) =>{
     }
   }
 
+
+  Handlebars.registerHelper('defaultParam', (type) => {
+    switch (type) {
+      case 'integer':
+        return '0';
+      case 'array':
+        return '[]'
+      case 'object':
+        return '{}';
+      default:
+        return `''`;
+    }
+  })
+
   /**
    * Compares two values.
    */
