@@ -1,26 +1,25 @@
 {
-  "name": "swaggifier",
+  "name": "apifire",
   "main": "./lib/generator.js",
-  "version": "0.13.2",
-  "description": "Generates express routers/controllers in Typescript using an OpenAPI 3 spec.",
+  "version": "0.5.0",
+  "description": "Generates express validators/routers/controllers in Typescript using an OpenAPI 3 spec.",
   "bin": {
-    "og": "./cli.js",
-    "openapi3-generator": "./cli.js"
+    "apifire": "./cli.js"
   },
   "scripts": {
-    "generate:petstore": "rm -rf sample && og -o sample tests/openapi3/petstore.yaml api-server",
-    "generate:petstore-exp": "rm -rf sample && og -o sample tests/openapi3/petstore-expanded.yaml api-server",
-    "generate:bt": "rm -rf sample && og -o sample tests/openapi3/bt-example.yaml api-server"
+    "generate:petstore": "rm -rf sample && ./cli.js -o sample tests/openapi3/petstore.yaml api-server",
+    "generate:petstore-exp": "rm -rf sample && og -./cli.js sample tests/openapi3/petstore-expanded.yaml api-server",
+    "generate:bt": "rm -rf sample && ./cli.js -o sample tests/openapi3/bt-example.yaml api-server"
   },
   "bugs": {
-    "url": "https://github.com/fmvilas/openapi3-generator/issues"
+    "url": "https://github.com/theogravity/apifire/issues"
   },
   "engines": {
     "node": ">=7.6"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/fmvilas/openapi3-generator.git"
+    "url": "git://github.com/theogravity/apifire.git"
   },
   "keywords": [
     "openapi",
@@ -36,20 +35,25 @@
     "generator",
     "documentation",
     "markdown",
-    "express"
+    "express",
+    "typescript",
+    "service",
+    "api"
   ],
-  "author": {
-    "name": "Fran Méndez",
-    "email": "fmvilas@gmail.com",
-    "url": "http://fmvilas.com"
-  },
+  "license": "Apache-2.0",
+  "author": "Theo Gravity <theo@suteki.nu>",
   "contributors": [
+    {
+      "name": "Fran Méndez",
+      "email": "fmvilas@gmail.com",
+      "url": "http://fmvilas.com"
+    },
     {
       "name": "Richard Klose",
       "email": "richard.klose@gmail.com"
     }
   ],
-  "homepage": "https://github.com/fmvilas/openapi3-generator",
+  "homepage": "https://github.com/theogravity/apifire",
   "dependencies": {
     "commander": "^5.1.0",
     "find-remove": "^2.0.1",
