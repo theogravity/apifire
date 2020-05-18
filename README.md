@@ -1,7 +1,7 @@
 # apifire
 
 A support library designed to work with the `yeoman` generator, 
-[`generator-ts-openapi-server`](https://github.com/theogravity/generator-ts-openapi-server).
+[`apifire-server`](https://github.com/theogravity/apifire-server).
 
 It takes an OpenAPI 3 spec, and generates routes, controllers, and validators for express in Typescript.
 
@@ -17,7 +17,7 @@ This library is a fork of the [`openapi3-generator`](https://github.com/openapi-
 - Uses a custom `json-schema-ref-parser-alt` build that adds a `x-original-ref` property as a reference to the 
 original `$ref` to the output schema, which is useful for static analysis when trying to generate types.
 - The templates that came with `openapi3-generator` were removed.
-- A new set of templates were added to work with `generator-ts-openapi-server`.
+- A new set of templates were added to work with `apifire-server`.
 - A prettifier was introduced to prettify the generated Typescript files.
 
 ## Install
@@ -32,7 +32,7 @@ npm install -g apifire
 
 ### Quick usage
 
-In the directory where the `generator-ts-openapi-server` generated service is, run:
+In the directory where the `apifire-server` generated service is, run:
 
 `$ apifire api.yaml api-server`
 
