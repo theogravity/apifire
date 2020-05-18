@@ -11,8 +11,14 @@ author's use-cases.
 It's been tested with the following files:
 
 - `tests/openapi3/petstore.yaml`
-- `tests/openapi3/petstore-expnanded.yaml`
 - `tests/openapi3/bt-example.yaml`
+
+Notes:
+
+- For responses, only 200 responses are used
+- Cookies / headers / auth definitions are not used
+- Parameters should be defined in `parameters` section and not the separate
+- `$ref` is supported in responses and parameters
 
 ## Fork notice
 
