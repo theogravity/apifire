@@ -259,9 +259,9 @@ module.exports = (Handlebars, _) =>{
   Handlebars.registerHelper('handleParam', (tsType, str, prefix) => {
     switch (tsType) {
       case 'number':
-        return `parseInt(${prefix}${str}, 10)`
+        return `parseInt(${prefix}${str}, 10) as unknown`
       default:
-        return `${prefix}${str}`
+        return `${prefix}${str} as unknown`
     }
   })
 
