@@ -81,6 +81,7 @@ paths:
         content:
           application/json:
             schema:
+              required: ['userId']
               type: object
               properties:
                 userId:

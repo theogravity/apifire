@@ -216,7 +216,7 @@ module.exports = (Handlebars, _) =>{
   /**
    * Converts an array to an array 'string' for handlebars
    */
-  Handlebars.registerHelper('toArray', (arr) => {
+  Handlebars.registerHelper('joinArrStr', (arr) => {
     if (Array.isArray(arr)) {
       return arr.reduce((curr, val) => {
         curr.push(`'${val}'`)
@@ -225,7 +225,7 @@ module.exports = (Handlebars, _) =>{
       }, [])
     }
 
-    return arr
+    return arr.join(', ')
   })
 
   /**

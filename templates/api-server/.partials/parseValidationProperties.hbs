@@ -1,0 +1,18 @@
+{{#with requestBody}}
+{{#with content.[application/json].schema}}
+  {{> parseValidationSchema this }}
+{{/with}}
+{{/with}}
+{{#each parameters}}
+  {{#equalContext this in "query"}}
+    {{{formatVar name}}}: {{{stringify schema}}},
+{{/equalContext}}
+  {{#equalContext this in "path"}}
+    {{{formatVar name}}}: {{{stringify schema}}},
+{{/equalContext}}
+  {{#match @../key "(post|put)"}}
+    {{#equalContext this in "body"}}
+      {{{formatVar name}}}: {{{stringify schema}}},
+    {{/equalContext}}
+  {{/match}}
+{{/each}}

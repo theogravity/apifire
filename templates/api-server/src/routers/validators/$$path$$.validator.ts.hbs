@@ -12,40 +12,9 @@ const ajv = new Ajv({
     {{#validMethod @key}}
 const {{funcOperation ../operationId}}Validator = ajv.compile({
   type: 'object',
-  required: [
-{{#each ../parameters}}
-  {{#equal this.in "query"}}
-    {{#if ../required}}'{{{formatVar ../name}}}',{{/if}}
-  {{/equal}}
-  {{#equal this.in "path"}}
-    {{#if ../required}}'{{{formatVar ../name}}}',{{/if}}
-  {{/equal}}
-  {{#match @../key "(post|put)"}}
-    {{#equal ../in "body"}}
-      {{#if ../required}}'{{{formatVar ../name}}}',{{/if}}
-    {{/equal}}
-  {{/match}}
-{{/each}}
-  ],
+  required: [{{> parseValidationRequired ..}}],
   properties: {
-{{#with ../requestBody}}
-{{#with content.[application/json].schema}}
-  {{> parseValidationSchema this }}
-{{/with}}
-{{/with}}
-{{#each ../parameters}}
-  {{#equal this.in "query"}}
-    {{{formatVar ../name}}}: {{{stringify ../schema}}},
-  {{/equal}}
-  {{#equal this.in "path"}}
-    {{{formatVar ../name}}}: {{{stringify ../schema}}},
-  {{/equal}}
-  {{#match @../key "(post|put)"}}
-    {{#equal ../in "body"}}
-      {{{formatVar ../name}}}: {{{stringify ../schema}}},
-    {{/equal}}
-  {{/match}}
-{{/each}}
+    {{> parseValidationProperties ..}}
   }
 })
 

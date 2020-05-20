@@ -1,7 +1,7 @@
 {{#each properties}}
   {{@key}}: {{#isLoneObj this}}{
 {{> parseValidationSchema this}}
-}{{else}}{{{stringify this}}}{{/isLoneObj}}
+}{{else}}{{{stringify this}}},{{/isLoneObj}}
 {{/each}}
 
 {{#equalContext this type "array"}}
