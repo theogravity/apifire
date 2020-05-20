@@ -1,3 +1,17 @@
-{{#each content.[application/json].schema.properties}}
-  {{{@key}}}: req.body.{{{@key}}},
+{{#with content.[application/json].schema}}
+{{#if properties}}
+  {{> reqParams this}}
+{{/if}}
+
+{{#if allOf}}
+  {{> reqParams (combineAllOf allOf)}}
+{{/if}}
+{{/with}}
+
+{{#equal type "array"}}
+items: [],
+{{/equal}}
+
+{{#each properties}}
+{{{formatVar @key}}}: {{{handleParam (tsType type ..) @key "req.body."}}} as {{{tsType type ..}}},
 {{/each}}

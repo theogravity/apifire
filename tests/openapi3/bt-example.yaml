@@ -25,7 +25,7 @@ paths:
       operationId: getThoughtById
       description: Get a thought by id
       parameters:
-        - $ref: '#/components/parameters/thoughtId'
+        - $ref: '#/components/parameters/pThoughtId'
       responses:
         200:
           $ref: '#/components/responses/ThoughtResponse'
@@ -34,6 +34,10 @@ paths:
       tags: [Thoughts]
       operationId: getThoughtStream
       description: Get the latest set of thoughts
+      parameters:
+        - $ref: '#/components/parameters/qLimit'
+        - $ref: '#/components/parameters/qAfterTime'
+        - $ref: '#/components/parameters/qUsername'
       responses:
         200:
           $ref: '#/components/responses/ThoughtStreamResponse'
@@ -44,27 +48,48 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/ThoughtResponse'
-  /users/{userId}/thoughts:
-    get:
-      tags: [User]
-      operationId: getUserThoughts
-      description: Get a user's thoughts
-      parameters:
-        - $ref: '#/components/parameters/testHeader'
-        - $ref: '#/components/parameters/userId'
-      responses:
-        200:
-          $ref: '#/components/responses/ThoughtStreamResponse'
-  /users/{userId}:
+  /user/{userId}:
     get:
       description: Get a user by id
       tags: [User]
       operationId: getUserById
       parameters:
-        - $ref: '#/components/parameters/userId'
+        - $ref: '#/components/parameters/pUserId'
       responses:
         200:
           $ref: '#/components/responses/GetUserResponse'
+  /user:
+    post:
+      tags: [User]
+      operationId: createUser
+      description: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserBody'
+      responses:
+        200:
+          $ref: '#/components/responses/UserCreationResponse'
+    put:
+      tags: [User]
+      operationId: updateUser
+      description: Update a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+      responses:
+        200:
+          $ref: '#/components/responses/UserCreationResponse'
+
+
 components:
   responses:
     BtMetadataResponse:
@@ -116,29 +141,69 @@ components:
                 properties:
                   data:
                     $ref: '#/components/schemas/BtUser'
+    UserCreationResponse:
+      description: User created success response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/CommonResponseProps'
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      userId:
+                        type: string
+                      verifyUrl:
+                        type: string
   parameters:
-    testHeader:
-      in: header
-      name: X-Request-ID
+    qLimit:
+      name: limit
+      in: query
+      required: false
+      description: Pagination limit
+      schema:
+        type: number
+    qAfterTime:
+      name: afterTime
+      in: query
+      required: false
+      description: Pagination after thought creation time
+      schema:
+        type: number
+    qUsername:
+      name: username
+      in: query
       schema:
         type: string
-    userId:
+        minLength: 15
+        maxLength: 15
+    pUserId:
       name: userId
       in: path
       required: true
       description: User Id
       schema:
         type: string
-    thoughtId:
+    pThoughtId:
       name: thoughtId
       in: path
       required: true
       description: Thought id
       schema:
         type: string
-        minLength: 3
-        maxLength: 20
+        minLength: 36
+        maxLength: 36
   schemas:
+    CreateUserBody:
+      xml:
+        name: CreateUserBody
+      allOf:
+        - type: object
+          properties:
+            username:
+              type: string
     CommonResponseProps:
       xml:
         name: CommonResponseProps

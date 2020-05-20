@@ -17,8 +17,9 @@ Notes:
 
 - For responses, only 200 responses are used
 - Cookies / headers / auth definitions are not used
-- Parameters should be defined in `parameters` section and not the separate
 - `$ref` is supported in responses and parameters
+- Use `parameters` to define non-post body params, use `requestBody` for body params
+- Content type `application/json` is only supported for `requestBody` and responses
 
 ## Fork notice
 
