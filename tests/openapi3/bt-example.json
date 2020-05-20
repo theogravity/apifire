@@ -817,10 +817,26 @@
                   },
                   "allOf": [
                     {
+                      "required": [
+                        "username"
+                      ],
                       "type": "object",
                       "properties": {
                         "username": {
-                          "type": "string"
+                          "type": "string",
+                          "minLength": 36,
+                          "maxLength": 36,
+                          "required": true
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "username": {
+                          "type": "string",
+                          "minLength": 36,
+                          "maxLength": 36
                         }
                       }
                     }
@@ -831,7 +847,7 @@
                   "summaryAsHTML": "",
                   "descriptionAsHTML": "",
                   "generatedExample": {
-                    "username": "string"
+                    "username": "stringstringstringstringstringstring"
                   }
                 }
               }
@@ -1379,10 +1395,25 @@
           },
           "allOf": [
             {
+              "required": [
+                "username"
+              ],
               "type": "object",
               "properties": {
                 "username": {
-                  "type": "string"
+                  "type": "string",
+                  "minLength": 36,
+                  "maxLength": 36
+                }
+              }
+            },
+            {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "minLength": 36,
+                  "maxLength": 36
                 }
               }
             }
@@ -1393,7 +1424,7 @@
           "summaryAsHTML": "",
           "descriptionAsHTML": "",
           "generatedExample": {
-            "username": "string"
+            "username": "stringstringstringstringstringstring"
           }
         },
         "CommonResponseProps": {

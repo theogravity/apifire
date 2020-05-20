@@ -28,6 +28,11 @@ const {{funcOperation ../operationId}}Validator = ajv.compile({
 {{/each}}
   ],
   properties: {
+{{#with ../requestBody}}
+{{#with content.[application/json].schema}}
+  {{> parseValidationSchema this }}
+{{/with}}
+{{/with}}
 {{#each ../parameters}}
   {{#equal this.in "query"}}
     {{{formatVar ../name}}}: {{{stringify ../schema}}},

@@ -200,10 +200,14 @@ components:
       xml:
         name: CreateUserBody
       allOf:
+        - required:
+            - username
         - type: object
           properties:
             username:
               type: string
+              minLength: 36
+              maxLength: 36
     CommonResponseProps:
       xml:
         name: CommonResponseProps

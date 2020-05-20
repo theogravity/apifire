@@ -214,6 +214,21 @@ module.exports = (Handlebars, _) =>{
   });
 
   /**
+   * Converts an array to an array 'string' for handlebars
+   */
+  Handlebars.registerHelper('toArray', (arr) => {
+    if (Array.isArray(arr)) {
+      return arr.reduce((curr, val) => {
+        curr.push(`'${val}'`)
+
+        return curr
+      }, [])
+    }
+
+    return arr
+  })
+
+  /**
    * Consolidates allOf items, removing duplicates
    */
   Handlebars.registerHelper('combineAllOf', (items) => {
