@@ -21,6 +21,7 @@ const {{funcOperation operationId}}Validator = ajv.compile({
 {{> parseValidationRequired this}}
 ],
   properties: {
+    {{! handle /path/{param} }}
     {{#if ../path/parameters}}
     {{> parseValidationProperties ../path}}
     {{/if}}

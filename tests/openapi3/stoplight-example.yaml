@@ -9,7 +9,7 @@ info:
 servers:
   - url: 'https://api.boxedthoughts.com/v1'
 paths:
-  '/account/{accountId}':
+  '/account/{pAccountId}':
     get:
       summary: Your GET endpoint
       tags: []
@@ -90,11 +90,10 @@ paths:
     parameters:
       - schema:
           type: string
-          format: uuid
-        name: accountId
+        name: pAccountId
         in: path
-        description: account id
         required: true
+        description: Account id in path
   /account/exists:
     get:
       summary: Your GET endpoint
@@ -129,7 +128,7 @@ paths:
           name: username
           description: Persona username
     parameters: []
-  '/persona/{personaId}':
+  '/persona/{pPersonaId}':
     get:
       summary: Your GET endpoint
       tags: []
@@ -163,10 +162,10 @@ paths:
     parameters:
       - schema:
           type: string
-          format: uuid
-        name: personaId
+        name: pPersonaId
         in: path
         required: true
+        description: Persona id in path
   /account/verifyEmail:
     get:
       summary: Your GET endpoint
@@ -265,8 +264,8 @@ paths:
                   type: string
                   description: The thought content
                 options:
-                  type: string
-                  description: Content type options
+                  description: Content type options in JSON
+                  type: object
                 type:
                   type: string
                   enum:
@@ -282,7 +281,7 @@ paths:
               required:
                 - personaId
                 - content
-                - contentType
+                - type
                 - visibilityType
         description: ''
   /config:
@@ -315,7 +314,7 @@ paths:
                   - maintenanceMode
       operationId: getSystemConfig
       description: Gets system configuration
-  '/thoughts/{thoughtId}/comments':
+  '/thoughts/{pThoughtId}/comments':
     get:
       summary: Your GET endpoint
       tags: []
@@ -336,10 +335,10 @@ paths:
     parameters:
       - schema:
           type: string
-          format: uuid
-        name: thoughtId
+        name: pThoughtId
         in: path
         required: true
+        description: Thought id in path
     post:
       summary: ''
       operationId: addThoughtComment
@@ -365,14 +364,14 @@ paths:
                   type: string
                 comment:
                   type: string
-  '/thoughts/{thoughtId}':
+  '/thoughts/{pThoughtId}':
     parameters:
       - schema:
           type: string
-          format: uuid
-        name: thoughtId
+        name: pThoughtId
         in: path
         required: true
+        description: Thought id in path
     get:
       summary: Your GET endpoint
       tags: []
@@ -436,9 +435,10 @@ paths:
                   maxLength: 15
                 about:
                   type: string
-                disabled:
-                  type: boolean
-                  description: If a persona has been disabled
+              required:
+                - accountId
+                - username
+                - about
   /account/forgotPass:
     post:
       summary: ''
@@ -476,7 +476,7 @@ paths:
             schema:
               type: object
               properties: {}
-  '/persona/{personaId}/blocked':
+  '/persona/{pPersonaId}/blocked':
     get:
       summary: Your GET endpoint
       tags: []
@@ -498,9 +498,10 @@ paths:
     parameters:
       - schema:
           type: string
-        name: personaId
+        name: pPersonaId
         in: path
         required: true
+        description: Persona id in path
     patch:
       summary: ''
       operationId: addBlockedPersona
@@ -536,13 +537,14 @@ paths:
                 personaId:
                   type: string
                   format: uuid
-  '/account/{accountId}/personas':
+  '/account/{pAccountId}/personas':
     parameters:
       - schema:
           type: string
-        name: accountId
+        name: pAccountId
         in: path
         required: true
+        description: Account id in path
     get:
       summary: Your GET endpoint
       tags: []
@@ -585,7 +587,7 @@ components:
           type: string
           description: The thought content
         options:
-          type: string
+          type: object
           description: Content type options
         type:
           type: string
@@ -621,6 +623,7 @@ components:
         - content
         - type
         - visibilityType
+      x-examples: {}
     Account:
       title: Account
       type: object
@@ -677,6 +680,8 @@ components:
         created:
           type: integer
           format: int64
+        disabled:
+          type: boolean
       required:
         - id
         - username

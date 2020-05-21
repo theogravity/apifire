@@ -1,7 +1,14 @@
 {{#each properties}}
+{{! handle type object }}
   {{@key}}: {{#isLoneObj this}}{
+type: 'object',
+{{! handle print out properties if it exists }}
+{{#if properties}}
+properties: {
 {{> parseValidationSchema this}}
-}{{else}}{{{stringify this}}},{{/isLoneObj}}
+}
+{{/if}}
+},{{else}}{{{stringify this}}},{{/isLoneObj}}
 {{/each}}
 
 {{#equalContext this type "array"}}

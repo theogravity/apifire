@@ -6,7 +6,8 @@
       "version": "1.0",
       "description": "",
       "contact": {
-        "name": "Theo Gravity"
+        "name": "Theo Gravity",
+        "email": "theo@suteki.nu"
       },
       "descriptionAsHTML": ""
     },
@@ -17,7 +18,7 @@
       }
     ],
     "paths": {
-      "/account": {
+      "/account/{pAccountId}": {
         "get": {
           "summary": "Your GET endpoint",
           "tags": [],
@@ -112,7 +113,7 @@
           "operationId": "getAccountInfo",
           "description": "Get account info",
           "parameters": [],
-          "slug": "op-get-account",
+          "slug": "op-get-account-paccountid",
           "summaryAsHTML": "Your GET endpoint",
           "descriptionAsHTML": "Get account info",
           "headers": [],
@@ -209,7 +210,7 @@
             },
             "description": ""
           },
-          "slug": "op-post-account",
+          "slug": "op-post-account-paccountid",
           "summaryAsHTML": "",
           "descriptionAsHTML": "Creates a new account"
         },
@@ -228,13 +229,6 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "accountId": {
-                      "type": "string",
-                      "format": "uuid",
-                      "summaryAsHTML": "",
-                      "descriptionAsHTML": "",
-                      "generatedExample": "string"
-                    },
                     "email": {
                       "type": "string",
                       "format": "email",
@@ -252,7 +246,6 @@
                   "summaryAsHTML": "",
                   "descriptionAsHTML": "",
                   "generatedExample": {
-                    "accountId": "string",
                     "email": "user@example.com",
                     "password": "string"
                   }
@@ -260,10 +253,21 @@
               }
             }
           },
-          "slug": "op-patch-account",
+          "slug": "op-patch-account-paccountid",
           "summaryAsHTML": "",
           "descriptionAsHTML": "Update account info"
         },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "name": "pAccountId",
+            "in": "path",
+            "required": true,
+            "description": "Account id in path"
+          }
+        ],
         "endpointName": "account"
       },
       "/account/exists": {
@@ -374,7 +378,7 @@
         "parameters": [],
         "endpointName": "account"
       },
-      "/persona/{personaId}": {
+      "/persona/{pPersonaId}": {
         "get": {
           "summary": "Your GET endpoint",
           "tags": [],
@@ -445,6 +449,12 @@
                             "summaryAsHTML": "",
                             "descriptionAsHTML": "",
                             "generatedExample": 0
+                          },
+                          "disabled": {
+                            "type": "boolean",
+                            "summaryAsHTML": "",
+                            "descriptionAsHTML": "",
+                            "generatedExample": true
                           }
                         },
                         "required": [
@@ -465,7 +475,8 @@
                           "lastCommentTime": 0,
                           "lastPostTime": 0,
                           "thoughtCount": 0,
-                          "created": 0
+                          "created": 0,
+                          "disabled": true
                         }
                       }
                     },
@@ -479,7 +490,8 @@
                         "lastCommentTime": 0,
                         "lastPostTime": 0,
                         "thoughtCount": 0,
-                        "created": 0
+                        "created": 0,
+                        "disabled": true
                       }
                     }
                   }
@@ -487,7 +499,7 @@
               }
             }
           },
-          "slug": "op-get-persona-personaid",
+          "slug": "op-get-persona-ppersonaid",
           "summaryAsHTML": "Your GET endpoint",
           "descriptionAsHTML": "Get a persona"
         },
@@ -522,19 +534,19 @@
               }
             }
           },
-          "slug": "op-patch-persona-personaid",
+          "slug": "op-patch-persona-ppersonaid",
           "summaryAsHTML": "",
           "descriptionAsHTML": "Updates persona details"
         },
         "parameters": [
           {
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "string"
             },
-            "name": "personaId",
+            "name": "pPersonaId",
             "in": "path",
-            "required": true
+            "required": true,
+            "description": "Persona id in path"
           }
         ],
         "endpointName": "persona"
@@ -691,11 +703,11 @@
                               "generatedExample": "string"
                             },
                             "options": {
-                              "type": "string",
+                              "type": "object",
                               "description": "Content type options",
                               "summaryAsHTML": "",
                               "descriptionAsHTML": "Content type options",
-                              "generatedExample": "string"
+                              "generatedExample": {}
                             },
                             "type": {
                               "type": "string",
@@ -755,6 +767,7 @@
                             "type",
                             "visibilityType"
                           ],
+                          "x-examples": {},
                           "x-original-ref": [
                             "#/components/schemas/Thought"
                           ],
@@ -767,7 +780,7 @@
                             "personaId": "string",
                             "username": "string",
                             "content": "string",
-                            "options": "string",
+                            "options": {},
                             "type": "bt-code",
                             "commentCount": 0,
                             "visibilityType": "public",
@@ -784,7 +797,7 @@
                             "personaId": "string",
                             "username": "string",
                             "content": "string",
-                            "options": "string",
+                            "options": {},
                             "type": "bt-code",
                             "commentCount": 0,
                             "visibilityType": "public",
@@ -804,7 +817,7 @@
                           "personaId": "string",
                           "username": "string",
                           "content": "string",
-                          "options": "string",
+                          "options": {},
                           "type": "bt-code",
                           "commentCount": 0,
                           "visibilityType": "public",
@@ -965,11 +978,11 @@
                       "generatedExample": "string"
                     },
                     "options": {
-                      "type": "string",
-                      "description": "Content type options",
+                      "description": "Content type options in JSON",
+                      "type": "object",
                       "summaryAsHTML": "",
-                      "descriptionAsHTML": "Content type options",
-                      "generatedExample": "string"
+                      "descriptionAsHTML": "Content type options in JSON",
+                      "generatedExample": {}
                     },
                     "type": {
                       "type": "string",
@@ -997,7 +1010,7 @@
                   "required": [
                     "personaId",
                     "content",
-                    "contentType",
+                    "type",
                     "visibilityType"
                   ],
                   "summaryAsHTML": "",
@@ -1005,7 +1018,7 @@
                   "generatedExample": {
                     "personaId": "string",
                     "content": "string",
-                    "options": "string",
+                    "options": {},
                     "type": "bt-code",
                     "visibilityType": "public"
                   }
@@ -1087,7 +1100,7 @@
         },
         "endpointName": "config"
       },
-      "/thoughts/{thoughtId}/comments": {
+      "/thoughts/{pThoughtId}/comments": {
         "get": {
           "summary": "Your GET endpoint",
           "tags": [],
@@ -1201,19 +1214,19 @@
           },
           "operationId": "getThoughtComments",
           "description": "Get thought comments",
-          "slug": "op-get-thoughts-thoughtid-comments",
+          "slug": "op-get-thoughts-pthoughtid-comments",
           "summaryAsHTML": "Your GET endpoint",
           "descriptionAsHTML": "Get thought comments"
         },
         "parameters": [
           {
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "string"
             },
-            "name": "thoughtId",
+            "name": "pThoughtId",
             "in": "path",
-            "required": true
+            "required": true,
+            "description": "Thought id in path"
           }
         ],
         "post": {
@@ -1252,12 +1265,6 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "thoughtId": {
-                      "type": "string",
-                      "summaryAsHTML": "",
-                      "descriptionAsHTML": "",
-                      "generatedExample": "string"
-                    },
                     "personaId": {
                       "type": "string",
                       "summaryAsHTML": "",
@@ -1274,7 +1281,6 @@
                   "summaryAsHTML": "",
                   "descriptionAsHTML": "",
                   "generatedExample": {
-                    "thoughtId": "string",
                     "personaId": "string",
                     "comment": "string"
                   }
@@ -1282,22 +1288,22 @@
               }
             }
           },
-          "slug": "op-post-thoughts-thoughtid-comments",
+          "slug": "op-post-thoughts-pthoughtid-comments",
           "summaryAsHTML": "",
           "descriptionAsHTML": "Add a comment to a thought"
         },
         "endpointName": "thoughts"
       },
-      "/thoughts/{thoughtId}": {
+      "/thoughts/{pThoughtId}": {
         "parameters": [
           {
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "string"
             },
-            "name": "thoughtId",
+            "name": "pThoughtId",
             "in": "path",
-            "required": true
+            "required": true,
+            "description": "Thought id in path"
           }
         ],
         "get": {
@@ -1354,11 +1360,11 @@
                             "generatedExample": "string"
                           },
                           "options": {
-                            "type": "string",
+                            "type": "object",
                             "description": "Content type options",
                             "summaryAsHTML": "",
                             "descriptionAsHTML": "Content type options",
-                            "generatedExample": "string"
+                            "generatedExample": {}
                           },
                           "type": {
                             "type": "string",
@@ -1418,6 +1424,7 @@
                           "type",
                           "visibilityType"
                         ],
+                        "x-examples": {},
                         "x-original-ref": [
                           "#/components/schemas/Thought"
                         ],
@@ -1430,7 +1437,7 @@
                           "personaId": "string",
                           "username": "string",
                           "content": "string",
-                          "options": "string",
+                          "options": {},
                           "type": "bt-code",
                           "commentCount": 0,
                           "visibilityType": "public",
@@ -1448,7 +1455,7 @@
                         "personaId": "string",
                         "username": "string",
                         "content": "string",
-                        "options": "string",
+                        "options": {},
                         "type": "bt-code",
                         "commentCount": 0,
                         "visibilityType": "public",
@@ -1463,7 +1470,7 @@
           },
           "operationId": "getThoughtById",
           "description": "Get a thought by id",
-          "slug": "op-get-thoughts-thoughtid",
+          "slug": "op-get-thoughts-pthoughtid",
           "summaryAsHTML": "Your GET endpoint",
           "descriptionAsHTML": "Get a thought by id"
         },
@@ -1498,7 +1505,7 @@
               }
             }
           },
-          "slug": "op-patch-thoughts-thoughtid",
+          "slug": "op-patch-thoughts-pthoughtid",
           "summaryAsHTML": "",
           "descriptionAsHTML": "Updates a thought"
         },
@@ -1563,22 +1570,19 @@
                       "summaryAsHTML": "",
                       "descriptionAsHTML": "",
                       "generatedExample": "string"
-                    },
-                    "disabled": {
-                      "type": "boolean",
-                      "description": "If a persona has been disabled",
-                      "summaryAsHTML": "",
-                      "descriptionAsHTML": "If a persona has been disabled",
-                      "generatedExample": true
                     }
                   },
+                  "required": [
+                    "accountId",
+                    "username",
+                    "about"
+                  ],
                   "summaryAsHTML": "",
                   "descriptionAsHTML": "",
                   "generatedExample": {
                     "accountId": "string",
                     "username": "string",
-                    "about": "string",
-                    "disabled": true
+                    "about": "string"
                   }
                 }
               }
@@ -1670,7 +1674,7 @@
         },
         "endpointName": "account"
       },
-      "/persona/{personaId}/blocked": {
+      "/persona/{pPersonaId}/blocked": {
         "get": {
           "summary": "Your GET endpoint",
           "tags": [],
@@ -1742,7 +1746,7 @@
           },
           "operationId": "getBlockedPersonas",
           "description": "Gets the user's blocked list of personas",
-          "slug": "op-get-persona-personaid-blocked",
+          "slug": "op-get-persona-ppersonaid-blocked",
           "summaryAsHTML": "Your GET endpoint",
           "descriptionAsHTML": "Gets the user's blocked list of personas"
         },
@@ -1751,9 +1755,10 @@
             "schema": {
               "type": "string"
             },
-            "name": "personaId",
+            "name": "pPersonaId",
             "in": "path",
-            "required": true
+            "required": true,
+            "description": "Persona id in path"
           }
         ],
         "patch": {
@@ -1792,7 +1797,7 @@
             },
             "description": ""
           },
-          "slug": "op-patch-persona-personaid-blocked",
+          "slug": "op-patch-persona-ppersonaid-blocked",
           "summaryAsHTML": "",
           "descriptionAsHTML": "Adds a persona to the block list"
         },
@@ -1828,21 +1833,22 @@
               }
             }
           },
-          "slug": "op-delete-persona-personaid-blocked",
+          "slug": "op-delete-persona-ppersonaid-blocked",
           "summaryAsHTML": "",
           "descriptionAsHTML": "Removes a persona from the block list"
         },
         "endpointName": "persona"
       },
-      "/account/{accountId}/personas": {
+      "/account/{pAccountId}/personas": {
         "parameters": [
           {
             "schema": {
               "type": "string"
             },
-            "name": "accountId",
+            "name": "pAccountId",
             "in": "path",
-            "required": true
+            "required": true,
+            "description": "Account id in path"
           }
         ],
         "get": {
@@ -1915,6 +1921,12 @@
                               "summaryAsHTML": "",
                               "descriptionAsHTML": "",
                               "generatedExample": 0
+                            },
+                            "disabled": {
+                              "type": "boolean",
+                              "summaryAsHTML": "",
+                              "descriptionAsHTML": "",
+                              "generatedExample": true
                             }
                           },
                           "required": [
@@ -1935,7 +1947,8 @@
                             "lastCommentTime": 0,
                             "lastPostTime": 0,
                             "thoughtCount": 0,
-                            "created": 0
+                            "created": 0,
+                            "disabled": true
                           }
                         },
                         "summaryAsHTML": "",
@@ -1948,7 +1961,8 @@
                             "lastCommentTime": 0,
                             "lastPostTime": 0,
                             "thoughtCount": 0,
-                            "created": 0
+                            "created": 0,
+                            "disabled": true
                           }
                         ]
                       }
@@ -1964,7 +1978,8 @@
                           "lastCommentTime": 0,
                           "lastPostTime": 0,
                           "thoughtCount": 0,
-                          "created": 0
+                          "created": 0,
+                          "disabled": true
                         }
                       ]
                     }
@@ -1975,7 +1990,7 @@
           },
           "operationId": "getAccountPersonas",
           "description": "Gets the personas associated with the account",
-          "slug": "op-get-account-accountid-personas",
+          "slug": "op-get-account-paccountid-personas",
           "summaryAsHTML": "Your GET endpoint",
           "descriptionAsHTML": "Gets the personas associated with the account"
         },
@@ -2027,11 +2042,11 @@
               "generatedExample": "string"
             },
             "options": {
-              "type": "string",
+              "type": "object",
               "description": "Content type options",
               "summaryAsHTML": "",
               "descriptionAsHTML": "Content type options",
-              "generatedExample": "string"
+              "generatedExample": {}
             },
             "type": {
               "type": "string",
@@ -2091,6 +2106,7 @@
             "type",
             "visibilityType"
           ],
+          "x-examples": {},
           "x-original-ref": [
             "#/components/schemas/Thought"
           ],
@@ -2103,7 +2119,7 @@
             "personaId": "string",
             "username": "string",
             "content": "string",
-            "options": "string",
+            "options": {},
             "type": "bt-code",
             "commentCount": 0,
             "visibilityType": "public",
@@ -2231,6 +2247,12 @@
               "summaryAsHTML": "",
               "descriptionAsHTML": "",
               "generatedExample": 0
+            },
+            "disabled": {
+              "type": "boolean",
+              "summaryAsHTML": "",
+              "descriptionAsHTML": "",
+              "generatedExample": true
             }
           },
           "required": [
@@ -2251,7 +2273,8 @@
             "lastCommentTime": 0,
             "lastPostTime": 0,
             "thoughtCount": 0,
-            "created": 0
+            "created": 0,
+            "disabled": true
           }
         },
         "ThoughtComment": {

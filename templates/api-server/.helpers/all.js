@@ -24,7 +24,7 @@ module.exports = (Handlebars, _) =>{
         }
 
         // if there's no original ref, then gotta recurse down
-        return type;
+        return 'Record<any, any>';
       default:
         return type;
     }
@@ -201,7 +201,7 @@ module.exports = (Handlebars, _) =>{
     return _.capitalize(str);
   });
 
-  Handlebars.registerHelper('stringify', (obj) => {
+  Handlebars.registerHelper('stringify', (obj = {}) => {
     return JSON.stringify(obj)
   });
 
