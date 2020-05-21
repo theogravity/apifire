@@ -9,24 +9,35 @@ const ajv = new Ajv({
 
 {{#each operation}}
   {{#each this.path}}
-    {{#validMethod @key}}
-const {{funcOperation ../operationId}}Validator = ajv.compile({
+  {{#with this}}
+    {{#validMethodContext this @key}}
+const {{funcOperation operationId}}Validator = ajv.compile({
   type: 'object',
-  required: [{{> parseValidationRequired ..}}],
+  required: [
+{{! handle /path/{param} }}
+{{#if ../path/parameters}}
+{{> parseValidationRequired ../path}}
+{{/if}}
+{{> parseValidationRequired this}}
+],
   properties: {
-    {{> parseValidationProperties ..}}
+    {{#if ../path/parameters}}
+    {{> parseValidationProperties ../path}}
+    {{/if}}
+    {{> parseValidationProperties this}}
   }
 })
 
-export function validate{{formatOperation ../operationId}}Params (params) {
-  const valid = {{funcOperation ../operationId}}Validator(params)
+export function validate{{formatOperation operationId}}Params (params) {
+  const valid = {{funcOperation operationId}}Validator(params)
 
   if (!valid) {
     throw getErrRegistry().newError('VALIDATION_FAILURE', 'INVALID_REQ_PARAMS').withSafeMetadata({
-      validations: {{funcOperation ../operationId}}Validator.errors
+      validations: {{funcOperation operationId}}Validator.errors
     })
   }
 }
-    {{/validMethod}}
+    {{/validMethodContext}}
+  {{/with}}
   {{/each}}
 {{/each}}
