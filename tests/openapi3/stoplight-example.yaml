@@ -5,10 +5,11 @@ info:
   description: ''
   contact:
     name: Theo Gravity
+    email: theo@suteki.nu
 servers:
   - url: 'https://api.boxedthoughts.com/v1'
 paths:
-  /account:
+  '/account/{accountId}':
     get:
       summary: Your GET endpoint
       tags: []
@@ -81,14 +82,19 @@ paths:
             schema:
               type: object
               properties:
-                accountId:
-                  type: string
-                  format: uuid
                 email:
                   type: string
                   format: email
                 password:
                   type: string
+    parameters:
+      - schema:
+          type: string
+          format: uuid
+        name: accountId
+        in: path
+        description: account id
+        required: true
   /account/exists:
     get:
       summary: Your GET endpoint
@@ -355,8 +361,6 @@ paths:
             schema:
               type: object
               properties:
-                thoughtId:
-                  type: string
                 personaId:
                   type: string
                 comment:

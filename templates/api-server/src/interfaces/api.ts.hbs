@@ -3,19 +3,16 @@
 {{! Request section}}
 {{#each openapi.paths}}
   {{#each this}}
-    {{#validMethod @key}}
-export interface {{paramOperation ../operationId}} {
-{{#each ../parameters}}
-{{#if description}}
-  /**
-  * {{{description}}}
-  */
-  {{name}}{{#unless required}}?{{/unless}}: {{{tsType schema.type schema}}}
-{{/if}}
-{{/each}}
-}
+    {{#validMethodContext this @key}}
+export interface {{paramOperation operationId}} {
+{{> parseReqInterface this}}
 
-    {{/validMethod}}
+{{! Handle the parameters at the method level (for path params)}}
+{{#if ../parameters}}
+{{> parseReqInterface ..}}
+{{/if}}
+}
+    {{/validMethodContext}}
   {{/each}}
 {{/each}}
 
@@ -31,12 +28,12 @@ export interface {{@key}} {
 {{! Responses w/o ref section}}
 {{#each openapi.paths}}
   {{#each this}}
-    {{#validMethod @key}}
-export interface {{resOperation ../operationId}} {
+    {{#validMethodContext this @key}}
+export interface {{resOperation operationId}} {
   status?: number
-{{> parseTypeSchema ../responses.[200].content.[application/json].schema}}
+{{> parseTypeSchema responses.[200].content.[application/json].schema}}
 }
-    {{/validMethod}}
+    {{/validMethodContext}}
   {{/each}}
 {{/each}}
 

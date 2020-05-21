@@ -45,6 +45,28 @@ module.exports = (Handlebars, _) =>{
   })
 
   /**
+   * Checks if a value is in an array
+   */
+  Handlebars.registerHelper('inArray', (context, field, required = [], options) => {
+    if (required && required.includes(field)) {
+      return options.fn(this);
+    }
+
+    return options.inverse(this);
+  })
+
+  /**
+   * Checks if a value is not in an array
+   */
+  Handlebars.registerHelper('notInArray', (context, field, required = [], options) => {
+    if (required && required.includes(field)) {
+      return options.inverse(this);
+    }
+
+    return options.fn(this);
+  })
+
+  /**
    * Compares two values.
    */
   Handlebars.registerHelper('equal', (lvalue, rvalue, options) => {
@@ -93,6 +115,21 @@ module.exports = (Handlebars, _) =>{
     }
 
     return options.fn(this);
+  });
+
+  /**
+   * Checks if a method is a valid HTTP method with context.
+   */
+  Handlebars.registerHelper('validMethodContext', (context, method, options) => {
+    const authorized_methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'COPY', 'HEAD', 'OPTIONS', 'LINK', 'UNLIK', 'PURGE', 'LOCK', 'UNLOCK', 'PROPFIND'];
+
+    if (arguments.length < 3)
+      throw new Error('Handlebars Helper validMethod needs 1 parameter');
+    if (authorized_methods.indexOf(method.toUpperCase()) === -1) {
+      return options.inverse(context);
+    }
+
+    return options.fn(context);
   });
 
   /**
