@@ -3,6 +3,9 @@
   {{> parseValidationSchema this }}
 {{/with}}
 {{/with}}
+{{#each properties}}
+  {{{formatVar @key}}}: {{{stringify this}}},
+{{/each}}
 {{#each parameters}}
   {{#equalContext this in "query"}}
     {{{formatVar name}}}: {{{stringify schema}}},

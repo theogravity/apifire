@@ -12,6 +12,7 @@ It's been tested with the following files:
 
 - `tests/openapi3/petstore.yaml`
 - `tests/openapi3/bt-example.yaml`
+- `tests/openapi3/spotlight-example.yaml`
 
 Notes:
 

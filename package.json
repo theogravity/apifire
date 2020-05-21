@@ -9,7 +9,8 @@
   "scripts": {
     "generate:petstore": "rm -rf sample && ./cli.js -o sample tests/openapi3/petstore.yaml api-server",
     "generate:petstore-exp": "rm -rf sample && ./cli.js -o sample tests/openapi3/petstore-expanded.yaml api-server",
-    "generate:bt": "rm -rf sample && ./cli.js -o sample tests/openapi3/bt-example.yaml api-server"
+    "generate:bt": "rm -rf sample && ./cli.js -o sample tests/openapi3/bt-example.yaml api-server",
+    "generate:stoplight": "rm -rf sample && ./cli.js -o sample tests/openapi3/stoplight-example.yaml api-server"
   },
   "bugs": {
     "url": "https://github.com/theogravity/apifire/issues"
