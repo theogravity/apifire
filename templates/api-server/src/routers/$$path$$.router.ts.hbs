@@ -38,6 +38,10 @@ const router = Router()
  */
 router.{{@key}}('{{../../subresource}}', async (req: IRequest, res: Response, next: NextFunction) => {
   const params : ApiInterfaces.{{paramOperation ../operationId}} = {
+{{! handle /path/{param} }}
+{{#if ../../path/parameters}}
+{{> parseRouterParams ../../path }}
+{{/if}}
 {{> parseRouterParams .. }}
   }
 

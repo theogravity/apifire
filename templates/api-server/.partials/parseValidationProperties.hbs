@@ -9,13 +9,11 @@
 {{#each parameters}}
   {{#equalContext this in "query"}}
     {{{formatVar name}}}: {{{stringify schema}}},
-{{/equalContext}}
+  {{/equalContext}}
   {{#equalContext this in "path"}}
     {{{formatVar name}}}: {{{stringify schema}}},
-{{/equalContext}}
-  {{#match @../key "(post|put)"}}
-    {{#equalContext this in "body"}}
+  {{/equalContext}}
+  {{#equalContext this in "body"}}
       {{{formatVar name}}}: {{{stringify schema}}},
-    {{/equalContext}}
-  {{/match}}
+  {{/equalContext}}
 {{/each}}

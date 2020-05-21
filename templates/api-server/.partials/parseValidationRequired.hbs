@@ -5,11 +5,9 @@
   {{#equalContext this in "path"}}
     {{#if required}}'{{{formatVar name}}}',{{/if}}
   {{/equalContext}}
-  {{#match @../key "(post|put)"}}
-    {{#equalContext this in "body"}}
-      {{{formatVar name}}}: {{{stringify schema}}},
-    {{/equalContext}}
-  {{/match}}
+  {{#equalContext this in "body"}}
+    {{{formatVar name}}}: {{{stringify schema}}},
+  {{/equalContext}}
 {{/each}}
 
 {{#with requestBody}}
