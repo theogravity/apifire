@@ -1,12 +1,13 @@
 {
   "name": "apifire",
   "main": "./lib/generator.js",
-  "version": "0.5.9",
+  "version": "0.5.10",
   "description": "Generates express validators/routers/controllers in Typescript using an OpenAPI 3 spec.",
   "bin": {
     "apifire": "./cli.js"
   },
   "scripts": {
+    "toc": "toc-md README.md README.md",
     "generate:petstore": "rm -rf sample && ./cli.js -o sample tests/openapi3/petstore.yaml api-server",
     "generate:petstore-exp": "rm -rf sample && ./cli.js -o sample tests/openapi3/petstore-expanded.yaml api-server",
     "generate:bt": "rm -rf sample && ./cli.js -o sample tests/openapi3/bt-example.yaml api-server",
@@ -71,5 +72,8 @@
     "slugg": "^1.2.1",
     "typescript": "^3.9.2",
     "word-wrap": "1.2.3"
+  },
+  "devDependencies": {
+    "toc-md-alt": "^0.3.2"
   }
 }

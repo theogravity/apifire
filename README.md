@@ -22,6 +22,24 @@ Notes:
 - Use `parameters` to define non-post body params, use `requestBody` for body params
 - Content type `application/json` is only supported for `requestBody` and responses
 
+# Table of Contents
+
+<!-- TOC -->
+- [Fork notice](#fork-notice)
+  - [Changes](#changes)
+- [Install](#install)
+- [Usage](#usage)
+  - [Quick usage](#quick-usage)
+  - [CLI reference](#cli-reference)
+- [Sample output](#sample-output)
+  - [Interfaces](#interfaces)
+  - [Router](#router)
+  - [Validator](#validator)
+  - [Controller](#controller)
+- [Authors](#authors)
+
+<!-- TOC END -->
+
 ## Fork notice
 
 This library is a fork of the [`openapi3-generator`](https://github.com/openapi-contrib/openapi3-generator) project.
@@ -85,6 +103,142 @@ The other directories and their files should never be modified.
     -t, --templates <templateDir>  directory where templates are located (defaults to internal templates directory)
     -b, --basedir <baseDir>        directory to use as the base when resolving local file references (defaults to OpenAPI file directory)
     -h, --help                     output usage information
+```
+
+## Sample output
+
+[Stoplight Studio](https://stoplight.io/studio/) is a recommended way to design your OpenAPI spec.
+
+The following items were generated using the `tests/openapi3/stoplight-example.yaml` file.
+
+### Interfaces
+
+```typescript
+export interface CreateAccountParams {
+  /**
+   * Account email
+   */
+  email: string
+  /**
+   * Hashed password
+   */
+  passHash: string
+  /**
+   * Authentication type
+   */
+  authType: string
+  /**
+   * Code to verify account
+   */
+  verifyCode: string
+
+  /**
+   * Account id in path
+   */
+  pAccountId: string
+}
+
+export interface CreateAccountResponse {
+  status?: number
+  /**
+   * Created account id
+   */
+  id?: string
+}
+```
+
+### Router
+
+```typescript
+/**
+ * Creates a new account
+ */
+router.post(
+  '/:pAccountId',
+  async (req: IRequest, res: Response, next: NextFunction) => {
+    const params: ApiInterfaces.CreateAccountParams = {
+      pAccountId: (req.params.pAccountId as unknown) as string,
+
+      email: (req.body.email as unknown) as string,
+      passHash: (req.body.passHash as unknown) as string,
+      authType: (req.body.authType as unknown) as string,
+      verifyCode: (req.body.verifyCode as unknown) as string
+    }
+
+    try {
+      validateCreateAccountParams(params)
+
+      const result = await createAccount(req.context, params)
+      res.status(result.status || 200)
+
+      delete result.status
+
+      res.send(result)
+    } catch (err) {
+      next(err)
+    }
+  }
+)
+```
+
+### Validator
+
+`apifire` generates validators that validate the incoming request parameters.
+
+```typescript
+const createAccountValidator = ajv.compile({
+  type: 'object',
+  required: ['pAccountId', 'email', 'passHash', 'authType', 'verifyCode'],
+  properties: {
+    pAccountId: { type: 'string' },
+    email: {
+      type: 'string',
+    },
+    passHash: {
+      type: 'string',
+    },
+    authType: {
+      type: 'string',
+    },
+    verifyCode: {
+      type: 'string',
+    }
+  }
+})
+
+export function validateCreateAccountParams (params) {
+  const valid = createAccountValidator(params)
+
+  if (!valid) {
+    throw getErrRegistry()
+      .newError('VALIDATION_FAILURE', 'INVALID_REQ_PARAMS')
+      .withSafeMetadata({
+        validations: createAccountValidator.errors
+      })
+  }
+}
+```
+
+### Controller
+
+You fill in your business logic in a controller, which is called by the router.
+
+```typescript
+/**
+ * @param {IRequestContext} context
+ * @param {Object} params
+ * @throws {Error}
+ * @return {Promise}
+ */
+export async function createAccount (
+  context: IRequestContext,
+  params: ApiInterfaces.CreateAccountParams
+): Promise<ApiInterfaces.CreateAccountResponse> {
+
+  return {
+    id: ''
+  }
+}
 ```
 
 ## Authors
