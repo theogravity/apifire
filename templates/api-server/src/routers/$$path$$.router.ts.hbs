@@ -4,7 +4,7 @@ import { IRequest } from '../interfaces'
 import * as ApiInterfaces from '../interfaces/api'
 {{#if openapi.components.securitySchemes}}
 // This is defined because a securitySchemes entry was defined in the OpenAPI components section
-import { protectEndpoint } from '../middleware/protect-endpoint.middleware'
+import { protectEndpoint } from '../middleware/protect-endpoint-middleware'
 {{/if}}
 
 import {
