@@ -288,6 +288,10 @@ paths:
         required: true
         description: Account id in path
     get:
+      security:
+        # only the first item is recognized
+        - OpenID: [scope]
+        - BasicAuth: []
       summary: Your GET endpoint
       tags: []
       responses:
@@ -782,6 +786,13 @@ paths:
                 - accountId
                 - username
 components:
+  securitySchemes:
+    OpenID:
+      type: openIdConnect
+      openIdConnectUrl: https://example.com/.well-known/openid-configuration
+    BasicAuth:
+      type: http
+      scheme: bearer
   schemas:
     Thought:
       title: Thought

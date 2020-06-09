@@ -30,6 +30,17 @@ module.exports = (Handlebars, _) =>{
     }
   }
 
+  const joinArrayStr = (arr) => {
+    if (Array.isArray(arr)) {
+      return arr.reduce((curr, val) => {
+        curr.push(`'${val}'`)
+
+        return curr
+      }, [])
+    }
+
+    return arr.join(', ')
+  }
 
   Handlebars.registerHelper('defaultParam', (type) => {
     switch (type) {
@@ -251,19 +262,27 @@ module.exports = (Handlebars, _) =>{
   });
 
   /**
-   * Converts an array to an array 'string' for handlebars
+   * If defined, pulls out the scope definitions from the
+   * first entry in the security property
    */
-  Handlebars.registerHelper('joinArrStr', (arr) => {
-    if (Array.isArray(arr)) {
-      return arr.reduce((curr, val) => {
-        curr.push(`'${val}'`)
+  Handlebars.registerHelper('resolveAuthScopes', (securityArr) => {
+    if (Array.isArray(securityArr) && securityArr[0]) {
+      // only use the first defined item for now
+      // { securityName: <Array of scopes> }
+      const obj = securityArr[0]
 
-        return curr
-      }, [])
+      for (const prop in obj) {
+        return joinArrayStr(obj[prop])
+      }
     }
 
-    return arr.join(', ')
+    return ''
   })
+
+  /**
+   * Converts an array to an array 'string' for handlebars
+   */
+  Handlebars.registerHelper('joinArrStr', joinArrayStr)
 
   /**
    * Consolidates allOf items, removing duplicates
