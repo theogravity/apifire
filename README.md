@@ -21,6 +21,7 @@ Notes:
 - `$ref` is supported in responses and parameters
 - Use `parameters` to define non-post body params, use `requestBody` for body params
 - Content type `application/json` is only supported for `requestBody` and responses
+- Very basic `securitySchemes` support - only the first `security` definition is used to protect an endpoint
 
 # Table of Contents
 
