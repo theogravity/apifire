@@ -11,6 +11,8 @@ export interface {{paramOperation operationId}} {
 {{#if ../parameters}}
 {{> parseReqInterface ..}}
 {{/if}}
+  [key: string]: any
+
 }
     {{/validMethodContext}}
   {{/each}}
@@ -21,6 +23,7 @@ export interface {{paramOperation operationId}} {
 {{#each openapi.components.schemas}}
 export interface {{@key}} {
 {{> parseTypeSchema this}}
+  [key: string]: any
 }
 
 {{/each}}
@@ -32,6 +35,7 @@ export interface {{@key}} {
 export interface {{resOperation operationId}} {
   status?: number
 {{> parseTypeSchema responses.[200].content.[application/json].schema}}
+  [key: string]: any
 }
     {{/validMethodContext}}
   {{/each}}
@@ -42,6 +46,7 @@ export interface {{resOperation operationId}} {
 {{#if [x-original-ref]}}
 export interface {{parseRef [x-original-ref]}} {
   status?: number
+  [key: string]: any
 {{#each content}}
     {{#each schema.allOf}}
 {{> parseTypeSchema this}}
