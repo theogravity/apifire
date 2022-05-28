@@ -212,8 +212,15 @@ module.exports = (Handlebars, _) =>{
     return _.capitalize(str);
   });
 
+  // This is generated from the OpenAPI data, which we don't care about
+  const invalidProperties = ['summaryAsHTML', 'descriptionAsHTML', 'generatedExample'];
+
   Handlebars.registerHelper('stringify', (obj = {}) => {
-    return JSON.stringify(obj)
+    invalidProperties.map((key) => {
+      delete obj[key]
+    })
+
+    return JSON.stringify(obj);
   });
 
   /**
