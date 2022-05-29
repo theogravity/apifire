@@ -46,11 +46,15 @@ export interface {{resOperation operationId}} {
 {{#if [x-original-ref]}}
 export interface {{parseRef [x-original-ref]}} {
   status?: number
-  [key: string]: any
 {{#each content}}
-    {{#each schema.allOf}}
-{{> parseTypeSchema this}}
-    {{/each}}
+    {{#if schema.allOf}}
+        {{#each schema.allOf}}
+        {{> parseTypeSchema this}}
+        {{/each}}
+    {{else}}
+        {{> parseTypeSchema this.schema}}
+    {{/if}}
+    [key: string]: any
 {{/each}}
 }
 
