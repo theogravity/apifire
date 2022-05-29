@@ -13,7 +13,13 @@
 items: Array<{{#if items.[x-original-ref]}}
 {{parseRef items.[x-original-ref]}}
 {{else}}
+{{#equalContext this items.type "object"}}
+{
 {{> parseTypeSchema items}}
+}
+{{else}}
+    {{> parseTypeSchema items}}
+{{/equalContext}}
 {{/if}}>
 {{/equalContext}}
 

@@ -15,7 +15,12 @@ properties: {
 items: Array<{{#if items.[x-original-ref]}}
 {{parseRef items.[x-original-ref]}}
 {{else}}
+{{! handle if the array has an object defined for its items }}
+{{#equalContext this items.type "object"}}
+{ {{> parseValidationSchema items}} }
+{{else}}
 {{> parseValidationSchema items}}
+{{/equalContext}}
 {{/if}}>
 {{/equalContext}}
 

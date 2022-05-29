@@ -13,5 +13,13 @@ items: [],
 {{/equal}}
 
 {{#each properties}}
+{{#equal type "array"}}
+{{{formatVar @key}}}: Array<{{{tsType type this}}}>,
+{{/equal}}
+{{#equal type "string"}}
+{{{formatVar @key}}}: req.body.{{@key}} as string,
+{{/equal}}
+{{#equal type ''}}
 {{{formatVar @key}}}: {{{handleParam (tsType type ..) @key "req.body."}}} as {{{tsType type ..}}},
+{{/equal}}
 {{/each}}

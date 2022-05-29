@@ -83,7 +83,12 @@ module.exports = (Handlebars, _) =>{
   Handlebars.registerHelper('equal', (lvalue, rvalue, options) => {
     if (arguments.length < 3)
       throw new Error('Handlebars Helper equal needs 2 parameters');
-    if (lvalue!=rvalue) {
+
+    if (lvalue === undefined && rvalue === '') {
+      return options.fn(this);
+    }
+
+    if (lvalue != rvalue) {
       return options.inverse(this);
     }
     return options.fn(this);
@@ -352,6 +357,14 @@ module.exports = (Handlebars, _) =>{
     switch (tsType) {
       case 'number':
         return `parseInt(${prefix}${str} as any, 10)`
+      case 'email':
+        return `${prefix}${str}`
+      case 'username':
+        return `${prefix}${str}`
+      case 'password':
+        return `${prefix}${str}`
+      case 'string':
+        return `${prefix}${str}`
       default:
         return `${prefix}${str} as unknown`
     }
@@ -366,5 +379,10 @@ module.exports = (Handlebars, _) =>{
    * Transforms x-original-ref to a type
    */
   Handlebars.registerHelper('parseRef', parseRef)
+
+  Handlebars.registerHelper('debug', (str) => {
+    console.log(str)
+  });
+
 }
 

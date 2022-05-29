@@ -43,18 +43,20 @@ if (!openapiFile) {
   program.help(); // This exits the process
 }
 
+const options = program.opts();
+
 generator.generate({
   openapi: openapiFile,
-  base_dir: program.basedir || baseDir || process.cwd(),
-  target_dir: program.output,
-  templates: program.templates ? path.resolve(process.cwd(), program.templates) : undefined,
-  curl: program.curl,
+  base_dir: options.basedir || baseDir || process.cwd(),
+  target_dir: options.output,
+  templates: options.templates ? path.resolve(process.cwd(), options.templates) : undefined,
+  curl: options.curl,
   template,
-  skipExistingFiles: program.skipExistingFiles,
-  deleteFolders: program.deleteFolders
+  skipExistingFiles: options.skipExistingFiles,
+  deleteFolders: options.deleteFolders
 }).then(() => {
   console.log(green('Done! ✨'));
-  console.log(yellow('Check out your shiny new API at ') + magenta(program.output) + yellow('.'));
+  console.log(yellow('Check out your shiny new API at ') + magenta(options.output) + yellow('.'));
 }).catch(err => {
   console.error(red('Aaww 💩. Something went wrong:'));
   console.error(red(err.stack || err.message || inspect(err, { depth: null })));
