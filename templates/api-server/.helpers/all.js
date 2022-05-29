@@ -1,6 +1,22 @@
 // Module constructor provides dependency injection from the generator instead of relying on require's cache here to ensure
 // the same instance of Handlebars gets the helpers installed and Lodash is definitiely available
 // regardless of where remote templates reside: in another Node project or a plain directory, which may have different or no modules available.
+
+// This is generated from the OpenAPI data, which we don't care about
+const invalidProperties = new Set(['description', 'summaryAsHTML', 'descriptionAsHTML', 'generatedExample']);
+
+function removeInvalidProperties(obj) {
+  if (typeof obj === 'object') {
+    for(let prop in obj) {
+      if (invalidProperties.has(prop)) {
+        delete obj[prop];
+      } else if (typeof obj[prop] === 'object') {
+        removeInvalidProperties(obj[prop]);
+      }
+    }
+  }
+}
+
 module.exports = (Handlebars, _) =>{
 
   const parseRef = (refs) => {
@@ -23,8 +39,21 @@ module.exports = (Handlebars, _) =>{
           return parseRef(schema['x-original-ref']);
         }
 
+        let str = `{`
+
+        const required = Array.isArray(schema.required) ? new Set(schema.required) : new Set()
+
+        for (let prop in schema.properties) {
+          const s = schema.properties[prop]
+          const key = required.has(prop) ? prop : `${prop}?`
+
+          str += `${key}: ${tsType(s.type, s)}\n`
+        }
+
+        str += '}'
+
         // if there's no original ref, then gotta recurse down
-        return 'Record<any, any>';
+        return str;
       default:
         return type;
     }
@@ -217,13 +246,8 @@ module.exports = (Handlebars, _) =>{
     return _.capitalize(str);
   });
 
-  // This is generated from the OpenAPI data, which we don't care about
-  const invalidProperties = ['summaryAsHTML', 'descriptionAsHTML', 'generatedExample'];
-
   Handlebars.registerHelper('stringify', (obj = {}) => {
-    invalidProperties.map((key) => {
-      delete obj[key]
-    })
+    removeInvalidProperties(obj)
 
     return JSON.stringify(obj);
   });

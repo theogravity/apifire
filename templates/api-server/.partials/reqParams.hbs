@@ -14,7 +14,7 @@ items: [],
 
 {{#each properties}}
 {{#equal type "array"}}
-{{{formatVar @key}}}: Array<{{{tsType type this}}}>,
+{{{formatVar @key}}}: req.body.{{@key}} as Array<any>,
 {{/equal}}
 {{#equal type "string"}}
 {{{formatVar @key}}}: req.body.{{@key}} as string,
