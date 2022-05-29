@@ -45,7 +45,6 @@ export interface {{resOperation operationId}} {
 {{#each openapi.components.responses}}
 {{#if [x-original-ref]}}
 export interface {{parseRef [x-original-ref]}} {
-  status?: number
 {{#each content}}
     {{#if schema.allOf}}
         {{#each schema.allOf}}
