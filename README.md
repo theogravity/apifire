@@ -25,7 +25,7 @@ Notes:
 - Use `parameters` to define non-post body params, use `requestBody` for body params
 - Content type `application/json` is only supported for `requestBody` and responses
 - Very basic `securitySchemes` support - only the first `security` definition is used to protect an endpoint
-- Post bodies *must* be an object type. It *cannot* be an array.
+- Post / response bodies *must* be an object type. It *cannot* be an array. You can have properties that are of any type in that object, however.
 
 # Table of Contents
 
