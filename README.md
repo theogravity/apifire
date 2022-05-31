@@ -16,12 +16,16 @@ It's been tested with the following files:
 
 Notes:
 
-- For responses, only 200 responses are used
+- It is recommended that you use [`Stoplight Studio`](https://stoplight.io/studio) to design your OpenAPI spec
+  * For a well-designed example using Stoplight Studio, see [this OpenAPI definition](https://github.com/theogravity/immutable-x-openapi)
+- For responses, only 200 responses are used with JSON response bodies.
+- It is recommended to create an OpenAPI component type for request bodies and responses (aka Model in Stoplight Studio)
 - Cookies / headers / auth definitions are not used
 - `$ref` is supported in responses and parameters
 - Use `parameters` to define non-post body params, use `requestBody` for body params
 - Content type `application/json` is only supported for `requestBody` and responses
 - Very basic `securitySchemes` support - only the first `security` definition is used to protect an endpoint
+- Post bodies *must* be an object type. It *cannot* be an array.
 
 # Table of Contents
 
