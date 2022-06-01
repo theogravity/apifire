@@ -1,7 +1,7 @@
 {
   "name": "apifire",
   "main": "./lib/generator.js",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "Generates express validators/routers/controllers in Typescript using an OpenAPI 3 spec.",
   "bin": {
     "apifire": "./cli.js"

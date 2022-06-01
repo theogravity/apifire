@@ -33,7 +33,6 @@ export interface {{@key}} {
   {{#each this}}
     {{#validMethodContext this @key}}
 export interface {{resOperation operationId}} {
-  status?: number
 {{> parseTypeSchema responses.[200].content.[application/json].schema}}
   [key: string]: any
 }

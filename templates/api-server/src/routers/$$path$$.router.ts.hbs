@@ -57,14 +57,9 @@ router.{{@key}}('{{../../subresource}}',
 
     const result = await {{funcOperation ../operationId}}(req.context, params)
   {{#ifNoSuccessResponses ../responses}}
-    delete result.status
 
     res.status(200).send(result)
   {{else}}
-    res.status(result.status || 200)
-
-    delete result.status
-
     res.send(result)
   {{/ifNoSuccessResponses}}
   } catch (err) {
