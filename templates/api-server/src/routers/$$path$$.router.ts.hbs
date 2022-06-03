@@ -56,12 +56,14 @@ router.{{@key}}('{{../../subresource}}',
     validate{{formatOperation ../operationId}}Params(params)
 
     const result = await {{funcOperation ../operationId}}(req.context, params)
-  {{#ifNoSuccessResponses ../responses}}
 
-    res.status(200).send(result)
+    if (!res.headersSent) {
+  {{#ifNoSuccessResponses ../responses}}
+      res.status(200).send(result)
   {{else}}
-    res.send(result)
+      res.send(result);
   {{/ifNoSuccessResponses}}
+    }
   } catch (err) {
     next(err)
   }
