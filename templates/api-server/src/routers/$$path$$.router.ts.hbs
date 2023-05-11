@@ -57,7 +57,7 @@ router.{{@key}}('{{../../subresource}}',
 
     const result = await {{funcOperation ../operationId}}(req.context, params)
 
-    if (!res.headersSent) {
+    if (!res.apifire?.disableAutoSend && !res.headersSent) {
   {{#ifNoSuccessResponses ../responses}}
       res.status(200).send(result)
   {{else}}
