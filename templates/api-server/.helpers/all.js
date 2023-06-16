@@ -3,7 +3,16 @@
 // regardless of where remote templates reside: in another Node project or a plain directory, which may have different or no modules available.
 
 // This is generated from the OpenAPI data, which we don't care about
-const invalidProperties = new Set(['description', 'summaryAsHTML', 'descriptionAsHTML', 'generatedExample', 'slug', 'x-stoplight']);
+const invalidProperties = new Set([
+  'description',
+  'summaryAsHTML',
+  'descriptionAsHTML',
+  'generatedExample',
+  'slug',
+  'x-stoplight',
+  'x-original-ref',
+  'title',
+]);
 
 function removeInvalidProperties(obj) {
   if (typeof obj === 'object') {
