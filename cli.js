@@ -5,6 +5,7 @@ const program = require('commander');
 const { inspect } = require('util');
 const packageInfo = require('./package.json');
 const generator = require('./lib/generator');
+const dupeInterfaceRemover = require('./lib/remove-dupe-interfaces');
 
 const red = text => `\x1b[31m${text}\x1b[0m`;
 const magenta = text => `\x1b[35m${text}\x1b[0m`;
@@ -55,6 +56,7 @@ generator.generate({
   skipExistingFiles: options.skipExistingFiles,
   deleteFolders: options.deleteFolders
 }).then(() => {
+  dupeInterfaceRemover(path.resolve(options.output, 'src', 'interfaces', 'api.ts'));
   console.log(green('Done! ✨'));
   console.log(yellow('Check out your shiny new API at ') + magenta(options.output) + yellow('.'));
 }).catch(err => {
