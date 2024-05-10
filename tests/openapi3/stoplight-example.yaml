@@ -404,7 +404,7 @@ paths:
                   type: string
   /persona:
     post:
-      summary: ''
+      summary: createPersona
       operationId: createPersona
       responses:
         '200':
@@ -435,10 +435,19 @@ paths:
                   maxLength: 15
                 about:
                   type: string
+                age:
+                  type: number
+                  x-stoplight:
+                    id: ss0bkucmdguxp
               required:
                 - accountId
                 - username
                 - about
+          application/javascript:
+            schema:
+              type: object
+              properties: {}
+        description: ''
   /account/forgotPass:
     post:
       summary: ''
@@ -494,7 +503,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/BlockedPersona'
       operationId: getBlockedPersonas
-      description: "Gets the user's blocked list of personas"
+      description: Gets the user's blocked list of personas
     parameters:
       - schema:
           type: string
@@ -721,3 +730,4 @@ components:
         username:
           type: string
       description: A blocked persona
+  requestBodies: {}

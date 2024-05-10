@@ -388,6 +388,8 @@ module.exports = (Handlebars, _) =>{
 
   Handlebars.registerHelper('handleParam', (tsType, str, prefix) => {
     switch (tsType) {
+      case 'integer':
+        return `parseInt(${prefix}${str} as any, 10)`
       case 'number':
         return `parseInt(${prefix}${str} as any, 10)`
       case 'email':
