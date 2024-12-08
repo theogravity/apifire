@@ -1,5 +1,7 @@
 # apifire
 
+**Notice**: This project is no longer being maintained. The successor project can be found [here](https://github.com/theogravity/fastify-starter-turbo-monorepo).
+
 A support library designed to work with the `yeoman` generator, 
 [`apifire-server`](https://github.com/theogravity/apifire-server).
 
